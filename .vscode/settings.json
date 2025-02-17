@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "temperature_sensor.h": "c"
+    }
+}
