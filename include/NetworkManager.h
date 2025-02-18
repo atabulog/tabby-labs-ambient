@@ -2,6 +2,7 @@
 #define NETWORK_MANAGER_H
 
 #include <stdbool.h>
+#include "esp_interface.h"
 
 /**
  * @brief Initialize Network manager system
