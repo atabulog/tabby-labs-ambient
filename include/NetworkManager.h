@@ -18,12 +18,11 @@ void network_manager_init();
 bool network_manager_is_connected(void);
 
 /**
- * @brief Connect to a Wi-Fi network
+ * @brief Get the current network interface
  * 
- * @param ssid Wi-Fi network SSID
- * @param password Wi-Fi network password
+ * @return esp_interface_t 
  */
-void network_manager_connect(const char* ssid, const char* password);
+esp_interface_t network_manager_get_interface(void);
 
 /**
  * @brief Disconnect from the Wi-Fi network

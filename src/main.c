@@ -23,18 +23,8 @@ void setup(void)
     network_manager_init();
 }
 
-void initialize_web_server(void)
-{
-}
-
-
 void app_main()
 {
     setup();
 
-    initialize_web_server();
-    
-    
-    // Connect to Wi-Fi
-    network_manager_connect("your_ssid", "your_password");
 }
