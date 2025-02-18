@@ -2,7 +2,7 @@
 #include "HardwareAbstractionLayer.h"
 #include "NetworkManager.h"
 #include "esp_log.h"
-
+#include "esp_sleep.h"
 /**
  * @brief Setup function to initialize the system
  * 
@@ -26,5 +26,14 @@ void setup(void)
 void app_main()
 {
     setup();
+    // Enable wakeup from a timer
+    esp_sleep_enable_timer_wakeup(100000);  //100ms
+    while (true)
+    {
+        //TODO: Real work
+        esp_light_sleep_start();
+        /* code */
+    }
+    
 
 }
