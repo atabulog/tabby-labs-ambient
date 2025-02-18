@@ -27,12 +27,10 @@ void app_main()
 {
     setup();
     // Enable wakeup from a timer
-    esp_sleep_enable_timer_wakeup(100000);  //100ms
     while (true)
     {
-        //TODO: Real work
-        esp_light_sleep_start();
-        /* code */
+        // TODO: Real work
+        vTaskDelay(pdMS_TO_TICKS(100)); // 100ms delay
     }
     
 

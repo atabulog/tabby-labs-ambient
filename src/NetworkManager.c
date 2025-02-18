@@ -220,6 +220,11 @@ static void ap_event_handler(
  */
 static void network_manager_start_sta(wifi_config_t *wifi_config)
 {
+    //stop any previous network connection
+    if(network_manager_is_connected())
+    {
+        network_manager_disconnect();
+    }
     // Initialize network interface and event loop for Wi-Fi
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
@@ -268,6 +273,11 @@ static void network_manager_start_sta(wifi_config_t *wifi_config)
 
 static void network_manager_start_ap(void)
 {
+    //stop any previous network connection
+    if(network_manager_is_connected())
+    {
+        network_manager_disconnect();
+    }
     // Initialize network interface and event loop for Wi-Fi
     esp_netif_init();
     esp_event_loop_create_default();
@@ -291,20 +301,29 @@ static void network_manager_start_ap(void)
                                                         NULL,
                                                         &instance_ap_staipassigned));
 
+    // Configure AP settings
     wifi_config_t ap_config = {};
     strcpy((char *)ap_config.ap.ssid, AP_SSID);
     strcpy((char *)ap_config.ap.password, "");
     ap_config.ap.ssid_len = strlen(AP_SSID);
-    ap_config.ap.max_connection = 1;
+    ap_config.ap.ssid_hidden = 0;
+    ap_config.ap.max_connection = 4;
+    ap_config.ap.channel = 6;
     ap_config.ap.authmode = WIFI_AUTH_OPEN;
 
     // Set Wi-Fi configuration and start AP mode
-    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
-    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &ap_config));
-    ESP_ERROR_CHECK(esp_wifi_start());
+    esp_err_t err = esp_wifi_set_mode(WIFI_MODE_AP);
+    if (err != ESP_OK)
+    {
+        ESP_LOGE(TAG, "Failed to set Wi-Fi mode to AP: %s", esp_err_to_name(err));
+        return;
+    }
+    esp_wifi_set_ps(WIFI_PS_NONE); // Disable power save mode for AP
+    ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &ap_config)); // Set AP configuration
+    ESP_ERROR_CHECK(esp_wifi_start()); // Start Wi-Fi
 
     ESP_LOGI(TAG, "WiFi AP started. Connect to '%s' with no password", AP_SSID);
-    network_interface = ESP_IF_WIFI_AP;
+    network_interface = ESP_IF_WIFI_AP;    
 }
 
 static void wifi_stop_ap(void)
