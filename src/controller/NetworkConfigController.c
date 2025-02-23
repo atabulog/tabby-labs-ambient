@@ -79,17 +79,19 @@ static esp_err_t handle_styles(httpd_req_t *req) {
 /*****************************************/
 /* public function definitions */
 /*****************************************/
-void network_config_controller_register_routes(web_server_t *server)
+void network_config_controller_register_routes()
 {
     ESP_LOGI(TAG, "Registering network config controller routes");
-    if(web_server_register_get(server, network_settings_uri, handle_root) != ESP_OK)
+    esp_err_t result = web_server_register_get(network_settings_uri, handle_root);
+    if(result != ESP_OK)
     {
-        ESP_LOGE(TAG, "Failed to register route: %s", network_settings_uri);
+        ESP_LOGE(TAG, "Failed to register network settings uri route: %s", esp_err_to_name(result));
         assert(false);
     }
-    if(web_server_register_get(server, styles_uri, handle_styles) != ESP_OK)
+    result = web_server_register_get(styles_uri, handle_styles);
+    if(result != ESP_OK)
     {
-        ESP_LOGE(TAG, "Failed to register route: %s", styles_uri);
+        ESP_LOGE(TAG, "Failed to register styles uri route: %s", esp_err_to_name(result));
         assert(false);
     }
 }

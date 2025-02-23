@@ -1,13 +1,21 @@
 #include "server/WebServer.h"
 #include "esp_log.h"
 
+/*****************************************/
+/* private variables */
+/*****************************************/
 static const char *TAG = "web_server";
+static web_server_t* server = NULL;
 
-bool web_server_start(web_server_t* server) 
+/*****************************************/
+/* public function definitions */
+/*****************************************/
+bool web_server_start() 
 {
     if(server)
     {
         ESP_LOGW(TAG, "Server already started.");
+        server->is_running = true;
         return false;
     }
     // Allocate memory for the server struct
@@ -15,6 +23,7 @@ bool web_server_start(web_server_t* server)
     if (!server) 
     {
         ESP_LOGE(TAG, "Failed to allocate memory for server.");
+        server->is_running = false;
         return false;
     }
     // Configure the web server
@@ -22,16 +31,19 @@ bool web_server_start(web_server_t* server)
     if (httpd_start(&server->server_handle, &config) != ESP_OK)
     {
         ESP_LOGE(TAG, "Failed to start web server.");
+        server->is_running = false;
         free(server);
+        server = NULL;
         return false;
     }
-    //log the success and return server pointer
+    server->is_running = true;
     ESP_LOGI(TAG, "Web server started.");
     return true;
 }
 
-bool web_server_stop(web_server_t* server)
+bool web_server_stop()
 {
+    server->is_running = false;
     if (server && server->server_handle)
     {
         httpd_stop(server->server_handle);
@@ -42,6 +54,7 @@ bool web_server_stop(web_server_t* server)
     ESP_LOGW(TAG, "failed to stop server, Web server already stopped.");
     return false;
 }
+
 /**
  * @brief Private function to register a uri handler with the server
  * 
@@ -52,7 +65,7 @@ bool web_server_stop(web_server_t* server)
 esp_err_t web_server_register_handler(web_server_t* server, httpd_uri_t* uri_handler)
 {
     //exit if server is null or server handle is null
-    if (!server || !server->server_handle)
+    if (!server || !server->server_handle || !uri_handler)
     {
         return ESP_ERR_INVALID_ARG;
     }
@@ -60,8 +73,25 @@ esp_err_t web_server_register_handler(web_server_t* server, httpd_uri_t* uri_han
     return httpd_register_uri_handler(server->server_handle, uri_handler);
 }
 
-esp_err_t web_server_register_get(web_server_t* server, const char* uri, esp_err_t (*handler)(httpd_req_t *req))
+esp_err_t web_server_register_get(const char* uri, esp_err_t (*handler)(httpd_req_t *req))
 {
+    //exit if server, uri, or provided handler is null
+    if (!server || !uri)
+    {
+        if (!server) 
+        {
+            ESP_LOGE(TAG, "Invalid registration arguments - Server is null.");
+        }
+        if (!uri) 
+        {
+            ESP_LOGE(TAG, "Invalid registration arguments - URI is null.");
+        }
+        if (!handler)
+        {
+            ESP_LOGE(TAG, "Invalid registration arguments - Handler is null.");
+        }
+        return ESP_ERR_INVALID_ARG;
+    }
     //create uri handler
     httpd_uri_t uri_handler = {
         .uri = uri,

@@ -14,9 +14,8 @@
 #include "server/WebServer.h"
 
 /**
- * @brief Registers the controller's routes to the provided web server
- * @param server Web server to handle the controller's routes
+ * @brief Registers the controller's routes to the web server
  */
-void ambient_data_controller_register_routes(web_server_t *server);
+void ambient_data_controller_register_routes();
 
 #endif // AMBIENT_DATA_CONTROLLER_H

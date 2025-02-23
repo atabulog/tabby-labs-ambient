@@ -14,9 +14,8 @@
 #include "server/WebServer.h"
 
 /**
-* @brief Registers the controller's routes to the provided web server
-* @param server Web server to handle the controller's routes
+* @brief Registers the controller's routes to the web server
 */
-void network_config_controller_register_routes(web_server_t *server);
+void network_config_controller_register_routes();
  
 #endif //NETWORK_CONFIG_CONTROLLER_H

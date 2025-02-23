@@ -8,3 +8,5 @@
 1. Need to enable power saving sleep cycles. Do not sleep when in AP mode.
 1. Need to integrate a server driven update when in sleep mode, or leverage a different device as the data aggregating server, and create this as a client.
 1. Need to integrate on-board led to indicate when in AP mode.
+1. Need to encrypt NVS data
+1. Need to look into support https traffic instead of raw http

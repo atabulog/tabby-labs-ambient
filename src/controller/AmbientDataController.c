@@ -35,10 +35,10 @@ esp_err_t ambient_controller_get_current_data(httpd_req_t *req)
 /*****************************************/
 /* public function definitions */
 /*****************************************/
-void ambient_data_controller_register_routes(web_server_t* server)
+void ambient_data_controller_register_routes()
 {
     ESP_LOGI(TAG, "Registering device controller routes");
-    if(web_server_register_get(server, current_temperature_uri, ambient_controller_get_current_data))
+    if(web_server_register_get(current_temperature_uri, ambient_controller_get_current_data))
     {
         ESP_LOGI(TAG, "Registered route: %s", current_temperature_uri);
     }

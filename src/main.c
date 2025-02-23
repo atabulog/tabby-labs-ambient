@@ -7,8 +7,9 @@
 #include "driver/SPIFFSManager.h"
 #include "esp_log.h"
 
-esp_interface_t network_interface = ESP_IF_MAX;
-web_server_t* web_server = NULL;
+static esp_interface_t network_interface = ESP_IF_MAX;
+static web_server_t web_server_instance;
+static web_server_t* web_server = &web_server_instance;
 
 /**
  * @brief Setup function to initialize the system
@@ -37,6 +38,9 @@ void setup(void)
     
     // Initialize the network manager
     network_manager_init();
+
+    // Initialize and start the web server
+    web_server_start(web_server);
 }
 
 void app_main()
@@ -49,20 +53,22 @@ void app_main()
         if(network_interface != network_manager_get_interface())
         {
             network_interface = network_manager_get_interface();
-            //restart web server if it is running
-            if(web_server)
+            //start a new webserver or restart already running
+            if(web_server->is_running)
             {
                 web_server_stop(web_server);
-                web_server = NULL;
                 web_server_start(web_server);
             }
+
             //ensure appropriate web server is running for given network state
             switch(network_interface)
             {
                 case ESP_IF_WIFI_STA:
+                    ESP_LOGI("main", "WIFI STA intf connected");
                     ambient_data_controller_register_routes(web_server);
                     break;
                 case ESP_IF_WIFI_AP:
+                    ESP_LOGI("main", "WIFI AP connected");
                     network_config_controller_register_routes(web_server);
                     break;
                 case ESP_IF_WIFI_NAN:

@@ -25,8 +25,8 @@ static esp_err_t device_controller_get_name(httpd_req_t *req)
     return ESP_OK;
 }
 
-void device_controller_register_routes(web_server_t* server)
+void device_controller_register_routes()
 {
     ESP_LOGI(TAG, "Registering device controller routes");
-    web_server_register_get(server, device_name_uri, device_controller_get_name);
+    web_server_register_get(device_name_uri, device_controller_get_name);
 }
