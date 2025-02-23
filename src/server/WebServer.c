@@ -28,6 +28,8 @@ bool web_server_start()
     }
     // Configure the web server
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+    config.uri_match_fn = httpd_uri_match_wildcard; //allow wildcard uri matching
+    // Start the web server
     if (httpd_start(&server->server_handle, &config) != ESP_OK)
     {
         ESP_LOGE(TAG, "Failed to start web server.");

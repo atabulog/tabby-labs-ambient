@@ -10,3 +10,5 @@
 1. Need to integrate on-board led to indicate when in AP mode.
 1. Need to encrypt NVS data
 1. Need to look into support https traffic instead of raw http
+1. Consider adding a MQTT client instead of just an http data server.
+1. Seems like the favicon.ico is either not being requested or not being served properly. May have to do with the wildcard url approach in the handler.
