@@ -9,7 +9,6 @@
  * @date 2025-02-17
  *
  * @copyright Copyright (c) 2025
- *
  */
 
 #include "server/WebServer.h"

@@ -1,11 +1,16 @@
 #include "esp_log.h"
 #include "controller/AmbientDataController.h"
-#include "HardwareAbstractionLayer.h"
+#include "driver/HardwareAbstractionLayer.h"
 
-
+/*****************************************/
+/* private variables */
+/*****************************************/
 static const char* TAG = "ambient_data_controller";
 static const char* current_temperature_uri = "/api/ambient/current";
 
+/*****************************************/
+/* private function definitions */
+/*****************************************/
 /**
  * @brief Get the current ambient values
  * 
@@ -27,6 +32,9 @@ esp_err_t ambient_controller_get_current_data(httpd_req_t *req)
     return ESP_OK;
 }
 
+/*****************************************/
+/* public function definitions */
+/*****************************************/
 void ambient_data_controller_register_routes(web_server_t* server)
 {
     ESP_LOGI(TAG, "Registering device controller routes");

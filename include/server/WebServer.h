@@ -31,4 +31,12 @@ bool web_server_stop(web_server_t* server);
  */
 esp_err_t web_server_register_get(web_server_t* server, const char* uri, esp_err_t (*handler)(httpd_req_t *req));
 
+/**
+ * @brief Serve a file from the file system
+ * @param request http request packet
+ * @param file_data file data to serve
+ * @param content_type content type of file
+ * @return esp_err_t result of serving file
+ */
+esp_err_t web_server_serve_file(httpd_req_t* request, FILE* file_data, const char* content_type);
 #endif // WEB_SERVER_H

@@ -1,5 +1,5 @@
-#include "NetworkManager.h"
-#include "NVSManager.h"
+#include "driver/NetworkManager.h"
+#include "driver/NVSManager.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "esp_log.h"
@@ -92,7 +92,7 @@ void network_manager_init(void)
         return;
     }
     // if stored network config is empty, start the ap network
-    if (wifi_config->sta.ssid[0] == '\0')
+    if (wifi_config == NULL || wifi_config->sta.ssid[0] == '\0')
     {
         network_manager_start_ap();
         return;

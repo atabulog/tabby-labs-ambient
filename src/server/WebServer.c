@@ -70,5 +70,39 @@ esp_err_t web_server_register_get(web_server_t* server, const char* uri, esp_err
         .user_ctx = NULL
     };
     //register uri handler with server
-    return web_server_register_handler(server, &uri_handler);
+    esp_err_t result = web_server_register_handler(server, &uri_handler);
+    if(result == ESP_OK)
+    {
+        ESP_LOGI(TAG, "Registered route: %s", uri);
+    }
+    else
+    {
+        ESP_LOGE(TAG, "Failed to register route: %s", uri);
+    }
+    //register uri handler with server
+    return result;
+}
+
+esp_err_t web_server_serve_file(httpd_req_t* request, FILE* file_data, const char* content_type)
+{
+    //exit if file data, httpd request, or content type is null
+    if (!file_data || !request || !content_type)
+    {
+        return ESP_ERR_INVALID_ARG;
+    }
+
+    //set the content type in the request
+    httpd_resp_set_type(request, content_type);
+    //create a buffer and index to read the file data
+    static char buffer[128] = {0};
+    static size_t bytes_read = 0;
+    //read the file data and send it to the client in chunks
+    while ((bytes_read = fread(buffer, 1, sizeof(buffer), file_data)) > 0)
+    {
+        httpd_resp_send_chunk(request, buffer, bytes_read);
+    }
+    //close the file and send the last chunk
+    fclose(file_data);
+    httpd_resp_send_chunk(request, NULL, 0);
+    return ESP_OK;
 }

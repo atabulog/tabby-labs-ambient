@@ -1,5 +1,18 @@
 {
     "files.associations": {
         "temperature_sensor.h": "c"
-    }
+    },
+    "editor.detectIndentation": false,
+    "[html]": {
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features",
+        "editor.tabSize": 2
+    },
+    "[c]": {
+      "editor.tabSize": 4
+    },
+    "html.format.indentInnerHtml": true,
 }
