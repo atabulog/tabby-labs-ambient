@@ -13,6 +13,7 @@ static const char* js_extension = ".js";
 static const char* png_extension = ".png";
 static const char* jpeg_extension = ".jpeg";
 static const char* icon_extension = ".ico";
+static const char* svg_extension = ".svg";
 // content types for the web server
 static const char* default_content_type = "text/plain";
 static const char* html_content_type = "text/html";
@@ -21,6 +22,7 @@ static const char* css_content_type = "text/css";
 static const char* png_content_type = "image/png";
 static const char* jpeg_content_type = "image/jpeg";
 static const char* icon_content_type = "image/x-icon";
+static const char* svg_content_type = "image/svg+xml";
 // server uris
 static const char* index_uri = "/";
 static const char* any_uri = "/*";
@@ -38,6 +40,7 @@ static const char* index_html = "/index.html";
  */
 static esp_err_t static_file_handler(httpd_req_t* req)
 {
+    ESP_LOGD(TAG, "Handling static file request: %s", req->uri);
     // verify the SPIFFS file system is mounted
     if (!spiffs_manager_is_mounted())
     {
@@ -76,6 +79,10 @@ static esp_err_t static_file_handler(httpd_req_t* req)
     else if (strcmp(content_extension, css_extension) == 0)
     {
         content_type = css_content_type;
+    }
+    else if (strcmp(content_extension, svg_extension) == 0)
+    {
+        content_type = svg_content_type;
     }
     else if (strcmp(content_extension, png_extension) == 0)
     {

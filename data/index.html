@@ -5,26 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WiFi Setup</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
     <script src="scripts.js"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="toolbar.css">
+    <link rel="stylesheet" href="wifi-form.css">
   </head>
 
   <body>
     <div id="toolbar-container"></div>
-    <div class="container">
-      <h2>Connect to your network</h2>
-      <form action="/connect" method="post">
-        <label for="ssid">SSID:</label>
-        <input type="text" id="ssid" name="ssid" required>
-
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-
-        <button type="submit">Connect</button>
-      </form>
-    </div>
+    <div id="wifi-form"></div>
   </body>
 
 </html>

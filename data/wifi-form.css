@@ -1,0 +1,25 @@
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  background: #3b3b3b;
+  color: var(--tl-primary-text-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  background-color: #dadada;
+  border-radius: 5px;
+}
+
+form {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+}

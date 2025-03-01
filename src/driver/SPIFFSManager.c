@@ -54,6 +54,7 @@ FILE* spiffs_manager_open_file(const char* file_path, const char* access_mode)
         return NULL;
     }
     // open file and return file pointer
+    ESP_LOGD(TAG, "Opening file: %s", file_path);
     return fopen(file_path, access_mode);
 }
 

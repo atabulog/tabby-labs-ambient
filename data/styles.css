@@ -1,36 +1,39 @@
+:root {
+  --tl-page-background-color: #2c2c2c;
+  --tl-primary-text-color: #ddd;
+
+  --tl-accent-100: hsl(189, 73%, 90%);  /* Very light */
+  --tl-accent-200: hsl(189, 73%, 75%);  /* Lighter */
+  --tl-accent-400: hsl(189, 73%, 60%);  /* Slightly lighter */
+  --tl-accent-500: hsl(189, 73%, 55%);  /* Base color (#36C8E1) */
+  --tl-accent-700: hsl(189, 73%, 40%);  /* Darker */
+  --tl-accent-900: hsl(189, 73%, 25%);  /* Very dark */
+}
+
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: var(--tl-page-background-color);
   text-align: center;
   padding: 20px;
 }
 
-.container {
-  max-width: 400px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-input {
-  width: 100%;
-  padding: 8px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-button {
-  background: #0288d1;
-  color: white;
+button.tl-btn-primary{
+  background: var(--tl-accent-500);
+  color: #fff;
   padding: 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #0277bd;
+button.tl-btn-primary:hover  {
+  background: var(--tl-accent-700);
+}
+
+button.tl-btn-primary:active {
+  background: var(--tl-accent-900);
+}
+
+button.tl-btn-sm {
+  width:25%
 }

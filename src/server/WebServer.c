@@ -117,6 +117,7 @@ esp_err_t web_server_register_get(const char* uri, esp_err_t (*handler)(httpd_re
 
 esp_err_t web_server_serve_file(httpd_req_t* request, FILE* file_data, const char* content_type)
 {
+    ESP_LOGD(TAG, "Serving file data for uri: %s", request->uri);
     //exit if file data, httpd request, or content type is null
     if (!file_data || !request || !content_type)
     {

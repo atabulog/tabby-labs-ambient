@@ -8,3 +8,14 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("toolbar-container").innerHTML = data;
         });
 });
+
+/**
+ * This script is used to load the toolbar.html file into the toolbar-container div.
+ */
+document.addEventListener("DOMContentLoaded", function() {
+    fetch("wifi-form.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("wifi-form").innerHTML = data;
+        });
+});
